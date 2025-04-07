@@ -9,6 +9,12 @@ app.use(express.json());
 // Підключення до бази
 const db = new sqlite3.Database("./news.db");
 
+const path = require("path");
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "./src/index.html"));
+});
+
 // Створення таблиці (виконати один раз)
 db.run(
   "CREATE TABLE IF NOT EXISTS news (id INTEGER PRIMARY KEY, title TEXT, content TEXT)"
