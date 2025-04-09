@@ -2,13 +2,9 @@ html {
   scroll-behavior: smooth;
 }
 
-h1 {
-  color: yellowgreen;
-}
-
 .header-container {
   width: 100%;
-  max-width: 375px;
+  max-width: 100%;
   min-width: 320px;
   position: absolute;
   backdrop-filter: blur(18px);
@@ -18,6 +14,15 @@ h1 {
     rgba(255, 255, 255, 0.14) 0%,
     rgba(153, 153, 153, 0.14) 100%
   );
+}
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: white;
+  fill: white;
 }
 
 .nav-menu {
@@ -32,13 +37,10 @@ h1 {
   align-items: center;
   gap: 4px;
 }
-.logo-icon,
-.logo-text {
-  fill: #fbfbfb;
-}
 
-.nav-menu-pc {
-  display: none;
+.header-logo {
+  width: 68px;
+  height: 65px;
 }
 
 .btn-menu {
