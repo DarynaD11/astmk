@@ -1,31 +1,48 @@
 .informations {
-    background: #001d05;
+    position: relative;
+    overflow: hidden;
     height: 809px;
     max-width: 100%;
     padding: 28px 20px 0px 20px;
+    margin: 0 auto;
+    min-width: 320px;
+    background: #001d05;
+}
+
+.info-back-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    /* не для SVG, але схоже за дією з slice */
+    z-index: 0;
+    filter: blur(75px);
+    pointer-events: none;
+}
+
+.info-back-icon>use {
+    width: 100%;
+    height: 100%;
+
+}
+
+.informations-container {
+    
+    
+}
+
+
+.info-nav {
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 20px;
-    margin: 0 auto;
-    min-width: 320px;
-    position: relative;
-    overflow: hidden;
-}
-
-.informations-cotainer {
-
-}
-
-.info-back-icon {
-
-}
-
-.info-nav {
-
 }
 
 .info-btn > button {
+    border: none;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
     border-radius: 16px;
     width: 332px;
@@ -41,3 +58,4 @@
     text-align: center;
     color: #fff;
 }
+
