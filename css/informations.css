@@ -1,0 +1,98 @@
+.informations {
+    position: relative;
+    overflow: hidden;
+    height: 809px;
+    max-width: 100%;
+    padding: 28px 20px 0px 20px;
+    margin: 0 auto;
+    min-width: 320px;
+    background: #001d05;
+    
+}
+
+
+.info-back-icon {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1440px;
+    height: 100%;
+    filter: blur(75px);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+
+.informations-container {
+    width: 100%;
+    height: 100%;
+}
+
+
+.info-nav {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.info-btn > button {
+    border: none;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    width: 100%;
+    min-width: 280px;
+    max-width: 332px;
+    height: 76px;
+    backdrop-filter: blur(200px);
+    background: linear-gradient(90deg, rgba(170, 170, 170, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%);
+}
+
+.info-btn-title {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 30px;
+    text-align: center;
+    color: #fff;
+    transition: all 0.4s ease;
+}
+
+.info-btn-toggle {
+    border: none;
+    border-radius: 16px;
+    min-width: 280px;
+    max-width: 332px;
+    backdrop-filter: blur(150px);
+    background: linear-gradient(90deg, rgba(170, 170, 170, 0.3) 0%, rgba(255, 255, 255, 0.3) 100%);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    padding: 16px;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.3s ease, padding 0.3s ease;
+}
+
+.info-btn-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    color: #fff;
+    width: 100%;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.info-btn.open .info-btn-toggle {
+    padding: 16px 5px 5px 5px;
+}
+
+.info-btn.open .info-btn-title {
+    font-size: 22px;
+}
