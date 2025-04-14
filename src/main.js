@@ -7,13 +7,21 @@ async function loadHTML(selector, url) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadHTML('#header', './partials/header.html');
-  loadHTML('#hero', './partials/hero.html');
-  loadHTML('#informations', './partials/informations.html');
-  loadHTML('#competitions', './partials/competitions.html');
-  loadHTML('#news', './partials/news.html');
-  loadHTML('#partners', './partials/partners.html');
-  loadHTML('#footer', './partials/footer.html');
-  loadHTML('#mob-menu', './partials/mob-menu.html');
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadHTML('#header', './partials/header.html');
+  await loadHTML('#hero', './partials/hero.html');
+  await loadHTML('#informations', './partials/informations.html');
+  await loadHTML('#competitions', './partials/competitions.html');
+  await loadHTML('#news', './partials/news.html');
+  await loadHTML('#partners', './partials/partners.html');
+  await loadHTML('#footer', './partials/footer.html');
+  await loadHTML('#mob-menu', './partials/mob-menu.html');
+
+  // Тепер, коли HTML вже в DOM, підключаємо модулі
+  const infoBtnModule = await import('./js/info-btn.js');
+  const mobMenuModule = await import('./js/mob-menu.js');
+
+  // (опціонально) викликаємо функції з модулів, якщо вони є
+  infoBtnModule.init?.();
+  mobMenuModule.init?.();
 });
