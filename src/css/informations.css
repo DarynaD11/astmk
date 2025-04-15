@@ -1,7 +1,8 @@
 .informations {
     position: relative;
     overflow: hidden;
-    height: 809px;
+    min-height: 809px;
+        height: auto;
     max-width: 100%;
     padding: 28px 20px 0px 20px;
     margin: 0 auto;
@@ -85,6 +86,7 @@
     transition: max-height 0.4s ease;
     color: #fff;
     width: 100%;
+    max-width: 332px;
     font-weight: 300;
     font-size: 16px;
 }
@@ -95,4 +97,103 @@
 
 .info-btn.open .info-btn-title {
     font-size: 22px;
+}
+
+.info-btn-toggle:hover, .info-btn-toggle:focus {
+    box-shadow: 0 4px 4px 0 #107207;
+}
+
+.text-indent {
+    text-indent: 2em;
+}
+
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-cont {
+    position: relative;
+}
+
+.img-founder {
+    position: absolute;
+    top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    border-radius: 50%;
+    border: 6px solid #fff;
+    width: 100%;
+    max-width: 83px;
+    height: 83px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.founder-card {
+    border-radius: 4px;
+    width: 100%;
+    max-width: 130px;
+    height: 143px;
+    background: #f5f5f5;
+    padding: 60px 12px 12px 12px;
+    margin-top: 40px;
+}
+
+.founder-card-title {
+    font-weight: 600;
+    font-size: 24px;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+.founder-card-inf {
+    font-weight: 400;
+    font-size: 24px;
+    text-align: center;
+    color: #0e0773;
+}
+
+.rules-link,
+.third-inf a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.text-rules {
+    font-weight: 400;
+    font-size: 28px;
+    color: #fff;
+    max-width: 235px;
+}
+
+.down-rules {
+    fill: #fff;
+    max-width: 10%;
+    transition: transform 0.4s ease;
+    height: 50px;
+}
+
+.third-inf a:hover .down-rules {
+    transform: rotate(180deg);
+}
+
+.address {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 14px;
+}
+
+.address-link {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
+    color: #f5f5f5;
 }

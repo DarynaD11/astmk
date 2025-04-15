@@ -1,6 +1,6 @@
 /* Мобільна версія */
 .hero-container {
-  height: 809px;
+  height: 100%;
   max-width: 100%;
   padding: 220px 20px 300px 20px;
   display: flex;
