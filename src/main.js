@@ -1,3 +1,4 @@
+// Оголошення функції loadHTML
 async function loadHTML(selector, url) {
   const el = document.querySelector(selector);
   if (el) {
@@ -7,6 +8,7 @@ async function loadHTML(selector, url) {
   }
 }
 
+// Виклик після завантаження сторінки
 document.addEventListener('DOMContentLoaded', async () => {
   await loadHTML('#header', './partials/header.html');
   await loadHTML('#hero', './partials/hero.html');
@@ -17,11 +19,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadHTML('#footer', './partials/footer.html');
   await loadHTML('#mob-menu', './partials/mob-menu.html');
 
-  // Тепер, коли HTML вже в DOM, підключаємо модулі
   const infoBtnModule = await import('./js/info-btn.js');
   const mobMenuModule = await import('./js/mob-menu.js');
 
-  // (опціонально) викликаємо функції з модулів, якщо вони є
   infoBtnModule.init?.();
   mobMenuModule.init?.();
 });

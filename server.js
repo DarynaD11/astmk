@@ -1,29 +1,46 @@
 const express = require("express");
 const cors = require("cors");
 const sqlite3 = require("sqlite3").verbose();
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-// Підключення до бази
-const db = new sqlite3.Database("./news.db");
-
 const path = require("path");
 
+// ===== ⬇️ LiveReload setup
+const livereload = require("livereload");
+const connectLivereload = require("connect-livereload");
+
+const liveReloadServer = livereload.createServer();
+liveReloadServer.watch(path.join(__dirname, "src")); // слідкуємо за папкою з HTML/CSS/JS
+
+liveReloadServer.server.once("connection", () => {
+  setTimeout(() => {
+    liveReloadServer.refresh("/");
+  }, 100);
+});
+// ===== ⬆️ LiveReload setup
+
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(connectLivereload()); // ⬅️ додано для LiveReload
+
+// SQLite
+const db = new sqlite3.Database("./news.db");
+
+// 📄 Головна сторінка
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./src/index.html"));
 });
 
-app.use(express.static(path.join(__dirname, 'src')));
+// 📁 Статика
+app.use(express.static(path.join(__dirname, "src")));
 
-
-// Створення таблиці (виконати один раз)
+// 🧱 БД
 db.run(
   "CREATE TABLE IF NOT EXISTS news (id INTEGER PRIMARY KEY, title TEXT, content TEXT)"
 );
 
-// Отримати всі новини
+// 🔽 API
 app.get("/news", (req, res) => {
   db.all("SELECT * FROM news", [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -31,7 +48,6 @@ app.get("/news", (req, res) => {
   });
 });
 
-// Додати новину
 app.post("/news", (req, res) => {
   const { title, content } = req.body;
   db.run(
@@ -44,7 +60,6 @@ app.post("/news", (req, res) => {
   );
 });
 
-// Видалити новину
 app.delete("/news/:id", (req, res) => {
   db.run("DELETE FROM news WHERE id = ?", [req.params.id], function (err) {
     if (err) return res.status(500).json({ error: err.message });
@@ -52,4 +67,5 @@ app.delete("/news/:id", (req, res) => {
   });
 });
 
-app.listen(3000, () => console.log("Сервер запущено на порті 3000"));
+// ✅ Запуск
+app.listen(3000, () => console.log("🚀 Сервер запущено на http://localhost:3000"));

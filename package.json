@@ -19,10 +19,13 @@
     "body-scroll-lock": "^4.0.0-beta.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "passive-events-support": "^1.1.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
+    "connect-livereload": "^0.6.1",
     "gh-pages": "^3.2.3",
+    "livereload": "^0.9.3",
     "nodemon": "^3.1.9"
   }
 }
