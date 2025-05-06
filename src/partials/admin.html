@@ -1,23 +1,14 @@
 <section class="first-section">
-  <div class="container first-section-cont">
-    <h1 class="first-section-title">Effective Solutions for Your Business</h1>
-    <button type="button" class="first-section-btn" data-modal-open>
-      Order Service
-    </button>
-  </div>
+  <button type="button" class="first-section-btn" data-modal-open>ENTER</button>
+
   <div class="modal-overlay is-open" data-modal>
     <div class="modal">
       <button class="modal-btn-close" type="button" data-modal-close>
-        <svg class="modal-btn-icon" width="8" height="8">
-          <use href="./images/icons.svg#icon-cross"></use>
-        </svg>
       </button>
-      <p class="modal-text-title">
-        Leave your contacts and we will call you back
-      </p>
+      <p class="modal-text-title">ADMIN</p>
       <form class="modal-form">
         <div class="modal-input">
-          <label for="user-name" class="modal-label">Name</label>
+          <label for="user-name" class="modal-label">Login</label>
           <div class="modal-input-cont">
             <input
               type="text"
@@ -25,71 +16,22 @@
               class="modal-input-box"
               name="user-name"
             />
-            <svg class="input-icon" width="18" height="24">
-              <use href="./images/icons.svg#icon-people"></use>
-            </svg>
+            
           </div>
         </div>
         <div class="modal-input">
-          <label for="user-phone" class="modal-label">Phone</label>
+          <label for="user-email" class="modal-label">Password</label>
           <div class="modal-input-cont">
             <input
-              type="tel"
-              id="user-phone"
-              name="user-phone"
-              class="modal-input-box"
-            />
-            <svg class="input-icon" width="18" height="24">
-              <use href="./images/icons.svg#icon-tel"></use>
-            </svg>
-          </div>
-        </div>
-        <div class="modal-input">
-          <label for="user-email" class="modal-label">Email</label>
-          <div class="modal-input-cont">
-            <input
-              type="email"
+              type="password"
               id="user-email"
               name="user-email"
               class="modal-input-box"
             />
-            <svg class="input-icon" width="18" height="24">
-              <use href="./images/icons.svg#icon-letter"></use>
-            </svg>
+            
           </div>
         </div>
-        <div class="modal-input">
-          <label for="user-comment" class="modal-label">Comment</label>
-          <textarea
-            name="user-comment"
-            id="user-comment"
-            class="modal-textarea modal-input-box"
-            placeholder="Text input"
-          ></textarea>
-
-          <div class="modal-input-cont"></div>
-        </div>
-        <div class="modal-check">
-          <input
-            type="checkbox"
-            name="user-privacy"
-            id="user-privacy"
-            value="true"
-            class="visually-hidden modal-check"
-          />
-          <label for="user-privacy" class="check-text">
-            <span class="check-box">
-              <svg width="10" height="8" class="icon-privacy">
-                <use href="./images/icons.svg#icon-checkmark"></use>
-              </svg>
-            </span>
-            <span class="mobile-check-span"
-              >I accept the terms and conditions of the&nbsp;
-              <a href="" class="check-link">Privacy Policy </a>
-            </span>
-          </label>
-        </div>
-        <button class="modal-btn" type="submit">Send</button>
+        <button class="first-section-btn" type="submit">ENTER</button>
       </form>
     </div>
   </div>
