@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadHTML('#partners', './partials/partners.html');
   await loadHTML('#footer', './partials/footer.html');
   await loadHTML('#mob-menu', './partials/mob-menu.html');
+  await loadHTML('#admin', './partials/admin.html');
 
   const infoBtnModule = await import('./js/info-btn.js');
   const mobMenuModule = await import('./js/mob-menu.js');
