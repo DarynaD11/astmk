@@ -1,71 +1,77 @@
 const express = require("express");
-const cors = require("cors");
-const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
-
-// ===== ⬇️ LiveReload setup
-const livereload = require("livereload");
-const connectLivereload = require("connect-livereload");
-
-const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, "src")); // слідкуємо за папкою з HTML/CSS/JS
-
-liveReloadServer.server.once("connection", () => {
-  setTimeout(() => {
-    liveReloadServer.refresh("/");
-  }, 100);
-});
-// ===== ⬆️ LiveReload setup
-
+const bcrypt = require("bcrypt");
+const bodyParser = require("body-parser");
+const session = require("express-session");
 const app = express();
+require("dotenv").config();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(connectLivereload()); // ⬅️ додано для LiveReload
+const newsController = require("./routes/news");
 
-// SQLite
-const db = new sqlite3.Database("./news.db");
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-// 📄 Головна сторінка
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "./src/index.html"));
+let hashedPassword;
+bcrypt.hash(ADMIN_PASSWORD, 10, (err, hash) => {
+  if (err) throw err;
+  hashedPassword = hash;
 });
 
-// 📁 Статика
-app.use(express.static(path.join(__dirname, "src")));
+function isAuthenticated(req, res, next) {
+  if (req.session.authenticated) {
+    return next();
+  }
+  res.status(401).send("Unauthorized");
+}
 
-// 🧱 БД
-db.run(
-  "CREATE TABLE IF NOT EXISTS news (id INTEGER PRIMARY KEY, title TEXT, content TEXT)"
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "secret-key",
+    resave: false,
+    saveUninitialized: true,
+  })
 );
 
-// 🔽 API
-app.get("/news", (req, res) => {
-  db.all("SELECT * FROM news", [], (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
-  });
-});
+// 🔓 ПУБЛІЧНИЙ МАРШРУТ — бачать усі
+app.get("/api/news", newsController.getAllNews);
 
-app.post("/news", (req, res) => {
-  const { title, content } = req.body;
-  db.run(
-    "INSERT INTO news (title, content) VALUES (?, ?)",
-    [title, content],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json({ id: this.lastID, title, content });
+// 🔐 АДМІНСЬКІ МАРШРУТИ — тільки авторизовані
+app.post("/api/news/add-news", isAuthenticated, newsController.addNews);
+app.delete("/api/news/delete-news/:id", isAuthenticated, newsController.deleteNews);
+
+// Статичні файли
+app.use(express.static(path.join(__dirname, "public")));
+
+// Логін
+app.post("/api/login", (req, res) => {
+  const { password } = req.body;
+  bcrypt.compare(password, hashedPassword, (err, result) => {
+    if (err) return res.status(500).send("Server error");
+    if (result) {
+      req.session.authenticated = true;
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(401);
     }
-  );
-});
-
-app.delete("/news/:id", (req, res) => {
-  db.run("DELETE FROM news WHERE id = ?", [req.params.id], function (err) {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ deleted: this.changes });
   });
 });
 
-// ✅ Запуск
-app.listen(3000, () => console.log("🚀 Сервер запущено на http://localhost:3000"));
+// Логаут
+app.post("/admin/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) return res.status(500).send("Logout failed");
+    res.sendStatus(200);
+  });
+});
+
+// Видача адмін-панелі
+app.get("/admin.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "admin.html"));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
