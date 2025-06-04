@@ -12,9 +12,9 @@
 /* Sections style */
 @import url("./header.css");
 @import url("./hero.css");
-/* @import url("./informations.css");
+@import url("./informations.css");
 @import url("./competitions.css");
-@import url("./news.css");
+/* @import url("./news.css");
 @import url("./partners.css");
 @import url("./footer.css"); */
 @import url("./mob-menu.css");

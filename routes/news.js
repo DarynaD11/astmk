@@ -1,42 +1,39 @@
-const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database("./db/news.db");
+const pool = require("../public/js/db");
 
-// Створення таблиці
-db.run(`CREATE TABLE IF NOT EXISTS news (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  title TEXT,
-  content TEXT
-)`);
+// Отримати всі новини
+exports.getAllNews = async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM news ORDER BY id DESC");
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("DB error");
+  }
+};
 
-// Публічне: отримати всі новини
-function getAllNews(req, res) {
-  db.all("SELECT * FROM news ORDER BY id DESC", (err, rows) => {
-    if (err) return res.status(500).send(err);
-    res.json(rows);
-  });
-}
-
-// Захищене: додати новину
-function addNews(req, res) {
+// Додати новину
+exports.addNews = async (req, res) => {
   const { title, content } = req.body;
-  db.run(
-    "INSERT INTO news (title, content) VALUES (?, ?)",
-    [title, content],
-    function (err) {
-      if (err) return res.status(500).send(err);
-      res.status(201).send({ id: this.lastID });
-    }
-  );
-}
+  try {
+    await pool.query("INSERT INTO news (title, content) VALUES ($1, $2)", [
+      title,
+      content,
+    ]);
+    res.sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("DB error");
+  }
+};
 
-// Захищене: видалити новину
-function deleteNews(req, res) {
+// Видалити новину
+exports.deleteNews = async (req, res) => {
   const { id } = req.params;
-  db.run("DELETE FROM news WHERE id = ?", [id], function (err) {
-    if (err) return res.status(500).send("Error deleting news");
-    if (this.changes === 0) return res.status(404).send("News not found");
-    res.send("News deleted successfully");
-  });
-}
-
-module.exports = { getAllNews, addNews, deleteNews };
+  try {
+    await pool.query("DELETE FROM news WHERE id = $1", [id]);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("DB error");
+  }
+};
