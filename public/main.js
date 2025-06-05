@@ -8,6 +8,11 @@ async function loadHTML(selector, url) {
   }
 }
 
+const iconv = require("iconv-lite");
+
+// Приклад перетворення:
+const nameUtf8 = iconv.decode(Buffer.from(row.name, "binary"), "win1251");
+
 // Виклик після завантаження сторінки
 document.addEventListener("DOMContentLoaded", async () => {
   await loadHTML("#header", "./partials/header.html");
